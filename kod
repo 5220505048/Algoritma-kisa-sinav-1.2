@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
+
+bool isAnlamli(char harf[]);
+
+void decrypt(char *mesaj, int kaydirma);
+
+void removeNewline(char *str);
+
+int main() {
+    char dosyaadi[100];
+    int kaydirma;
+
+    printf("Dosya adini girin (.txt ekleyerek): ");
+    scanf("%s", dosyaadi);
+
+    printf("Kaydirma miktarini girin: ");
+    scanf("%d", &kaydirma);
+
+    FILE *file = fopen(dosyaadi, "r");
+    if (file == NULL)
+	{
+        printf("Dosya acilmadi.\n");
+        return 1;
+    }
+
+    char mesaj[100];
+
+    while (fgets(mesaj, sizeof(mesaj), file) != NULL) 
+	{
+        removeNewline(mesaj);
+
+        decrypt(mesaj, kaydirma);
+        printf("Cozulmus mesaj: %s\n", mesaj);
+    }
+
+    fclose(file);
+
+    return 0;
+}
+
+bool isAnlamli(char harf[]) 
+{
+    int i = 0;
+    while (harf[i] != '\0') {
+        if (!isalpha(harf[i])) {
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
+
+void decrypt(char *mesaj, int kaydirma) 
+{
+    int i = 0;
+    while (mesaj[i] != '\0') 
+	{
+        if (isalpha(mesaj[i])) 
+		{
+            if (islower(mesaj[i])) 
+			{
+                mesaj[i] = (mesaj[i] - 'a' - kaydirma + 26) % 26 + 'a';
+            } else if (isupper(mesaj[i])) 
+			{
+                mesaj[i] = (mesaj[i] - 'A' - kaydirma + 26) % 26 + 'A';
+            }
+        }
+        i++;
+    }
+}
+
+void removeNewline(char *str) 
+{
+    int len = strlen(str);
+    if (len > 0 && str[len - 1] == '\n') 
+	{
+        str[len - 1] = '\0';
+    }
+}
