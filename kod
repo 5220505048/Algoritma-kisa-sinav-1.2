@@ -45,7 +45,8 @@ bool isAnlamli(char harf[])
 {
     int i = 0;
     while (harf[i] != '\0') {
-        if (!isalpha(harf[i])) {
+        if (!isalpha(harf[i])) 
+		{
             return false;
         }
         i++;
