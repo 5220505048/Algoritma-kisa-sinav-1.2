@@ -64,7 +64,8 @@ void decrypt(char *mesaj, int kaydirma)
             if (islower(mesaj[i])) 
 			{
                 mesaj[i] = (mesaj[i] - 'a' - kaydirma + 26) % 26 + 'a';
-            } else if (isupper(mesaj[i])) 
+            } 
+			else if (isupper(mesaj[i])) 
 			{
                 mesaj[i] = (mesaj[i] - 'A' - kaydirma + 26) % 26 + 'A';
             }
